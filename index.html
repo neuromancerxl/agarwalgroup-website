@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#131716">
+  <meta name="description" content="Demonstration website for the Agarwal Group at the University of Pennsylvania.">
+  <title>Agarwal Group | University of Pennsylvania</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="site-name" href="#home">
+        Agarwal Group
+        <span>University of Pennsylvania · Materials Science and Engineering</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="#research">Research</a>
+        <a href="#publications">Publications</a>
+        <a href="#people">People</a>
+        <a href="#news">News</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- HOME -->
+    <div class="page" id="home-page" data-page="home">
+      <div class="home-top">
+        <section class="home-intro wrap" aria-labelledby="home-title">
+          <div class="home-text">
+            <p class="eyebrow">Research / Penn Materials Science</p>
+            <h1 id="home-title">
+              <span data-hero-topic="quantum">Quantum materials,</span><br>
+              <span data-hero-topic="photonics">photonics</span> and<br>
+              <span data-hero-topic="phase">phase change</span>
+            </h1>
+            <p class="home-summary">We study light–matter interactions and the structural and electronic properties of materials at the nanoscale.</p>
+          </div>
+
+          <div class="slideshow" aria-label="Research figures">
+            <figure class="slide phase-slide" data-slide data-topic="phase">
+              <div class="slide-frame">
+                <img src="images/phase.webp" alt="Illustration of electrically driven amorphization in indium selenide">
+              </div>
+              <figcaption><strong>Phase-change materials.</strong> Illustration by Akanksha Jain, <a href="https://www.engineering.upenn.edu/stories/breakthrough-in-energy-efficient-avalanche-based-amorphization-could-revolutionize-data-storage/" target="_blank" rel="noopener">Penn Engineering, 2024</a>.</figcaption>
+            </figure>
+
+            <figure class="slide quantum-slide" data-slide data-topic="quantum" hidden>
+              <div class="slide-frame">
+                <img src="images/quantum.webp" alt="MoTe2 structures and photocurrent plots from a quantum geometry preprint">
+              </div>
+              <figcaption><strong>Quantum geometry in MoTe₂.</strong> Fig. 1, Chen et al., <a href="https://arxiv.org/html/2609.38102v1" target="_blank" rel="noopener">2026 arXiv preprint</a>.</figcaption>
+            </figure>
+
+            <figure class="slide" data-slide data-topic="photonics" hidden>
+              <div class="slide-frame">
+                <img src="images/structured-light.webp" alt="Five optical vortex modes labeled from plus two to minus two">
+              </div>
+              <figcaption><strong>Structured light.</strong> Optical vortex modes from <a href="https://www.engineering.upenn.edu/stories/penn-engineers-develop-first-tunable-chip-based-vortex-microlaser-and-detector-encode-e490e7983997/" target="_blank" rel="noopener">Penn Engineering, 2020</a>.</figcaption>
+            </figure>
+
+            <div class="slide-controls">
+              <span id="slide-count">01 / 03</span>
+              <div>
+                <button type="button" id="previous-slide" aria-label="Previous research image">‹ <span>Prev</span></button>
+                <button type="button" id="next-slide" aria-label="Next research image"><span>Next</span> ›</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="wrap home-lower">
+        <section class="home-section">
+          <div class="section-title">
+            <h2>Recent papers</h2>
+            <a href="#publications">Selected publications</a>
+          </div>
+
+          <div class="paper-row">
+            <span class="paper-year">2026</span>
+            <div><h3><a href="https://arxiv.org/abs/2609.38102" target="_blank" rel="noopener">Spatially dispersive photogalvanic effects as a probe of quantum geometric tensor</a></h3><p>Yicong Chen et al. · Ritesh Agarwal</p></div>
+            <div class="paper-journal">arXiv<span>Preprint</span></div>
+          </div>
+          <div class="paper-row">
+            <span class="paper-year">2026</span>
+            <div><h3><a href="https://doi.org/10.1021/acs.nanolett.6c02836" target="_blank" rel="noopener">Geometric Engineering of Flat Bands in a Single-Layer Photonic Graphene</a></h3><p>Dun Wang, Shupeng Xu, Jia-Chen Shi, Xuyang Li &amp; Ritesh Agarwal</p></div>
+            <div class="paper-journal">Nano Letters</div>
+          </div>
+          <div class="paper-row">
+            <span class="paper-year">2025</span>
+            <div><h3><a href="https://doi.org/10.1103/PhysRevB.111.205108" target="_blank" rel="noopener">Topological phase transition from optical manipulation of chiral response in (TaSe₄)₂I</a></h3><p>Utkarsh Khandelwal, Harshvardhan Jog et al. · Ritesh Agarwal</p></div>
+            <div class="paper-journal">Physical Review B</div>
+          </div>
+          <div class="paper-row">
+            <span class="paper-year">2024</span>
+            <div><h3><a href="https://www.nature.com/articles/s41586-024-08156-8" target="_blank" rel="noopener">Electrically driven long-range solid-state amorphization in ferroic In₂Se₃</a></h3><p>Gaurav Modi, Shubham K. Parate et al. · Ritesh Agarwal</p></div>
+            <div class="paper-journal">Nature</div>
+          </div>
+          <div class="paper-row">
+            <span class="paper-year">2024</span>
+            <div><h3><a href="https://www.nature.com/articles/s41586-024-07949-1" target="_blank" rel="noopener">Opto-twistronic Hall effect in a three-dimensional spiral lattice</a></h3><p>Zhurun Ji, Yuzhou Zhao et al. · Ritesh Agarwal</p></div>
+            <div class="paper-journal">Nature</div>
+          </div>
+        </section>
+
+        <section class="home-section home-news">
+          <div class="section-title"><h2>News</h2><a href="#news">More news</a></div>
+          <article><time datetime="2025-10-21">21 OCT 2025</time><a href="https://almanac.upenn.edu/articles/ritesh-agarwal-and-douglas-jerolmack-2025-american-physical-society-fellows" target="_blank" rel="noopener">Ritesh Agarwal elected an APS Fellow</a></article>
+          <article><time datetime="2024-11-14">14 NOV 2024</time><a href="https://penntoday.upenn.edu/news/breakthrough-energy-saving-process-could-transform-data-storage" target="_blank" rel="noopener">Electrically driven amorphization in In₂Se₃</a></article>
+        </section>
+      </div>
+    </div>
+
+    <!-- RESEARCH -->
+    <div class="page wrap" id="research-page" data-page="research" hidden>
+      <div class="page-heading">
+        <h1>Research</h1>
+        <p>The group combines materials synthesis, optical measurements, microscopy, and device experiments to study low-dimensional materials and their response to light and electric fields.</p>
+      </div>
+
+      <section class="research-area">
+        <div>
+          <h2>Quantum materials and topology</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec sed odio dui, et commodo cursus magna.</p>
+          <h3>Selected papers</h3>
+          <a class="paper-link" href="https://arxiv.org/abs/2609.38102" target="_blank" rel="noopener">Spatially dispersive photogalvanic effects as a probe of quantum geometric tensor<span>arXiv · 2026 · Preprint</span></a>
+          <a class="paper-link" href="https://arxiv.org/abs/2609.36353" target="_blank" rel="noopener">Quantum metric induced nonlinear transport in the hidden loop-current phase of kagome metal RbV₃Sb₅<span>arXiv · 2026 · Preprint</span></a>
+          <a class="paper-link" href="https://doi.org/10.1103/PhysRevB.111.205108" target="_blank" rel="noopener">Topological phase transition from optical manipulation of chiral response in (TaSe₄)₂I<span>Physical Review B · 2025</span></a>
+        </div>
+        <figure><img src="images/quantum.webp" alt="MoTe2 structures and photocurrent plots"><figcaption>MoTe₂ structures and photocurrent measurements. Fig. 1, Chen et al., <a href="https://arxiv.org/html/2609.38102v1" target="_blank" rel="noopener">2026 preprint</a>.</figcaption></figure>
+      </section>
+
+      <section class="research-area">
+        <div>
+          <h2>Nanophotonics and structured light</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas faucibus mollis interdum. Cras mattis consectetur purus sit amet fermentum, sed posuere consectetur est at lobortis.</p>
+          <h3>Selected papers</h3>
+          <a class="paper-link" href="https://doi.org/10.1021/acs.nanolett.6c02836" target="_blank" rel="noopener">Geometric Engineering of Flat Bands in a Single-Layer Photonic Graphene<span>Nano Letters · 2026</span></a>
+          <a class="paper-link" href="https://www.nature.com/articles/s41586-022-05339-z" target="_blank" rel="noopener">Spin–orbit microlaser emitting in a four-dimensional Hilbert space<span>Nature · 2022</span></a>
+          <a class="paper-link" href="https://doi.org/10.1126/science.aba9192" target="_blank" rel="noopener">Photocurrent detection of the orbital angular momentum of light<span>Science · 2020</span></a>
+        </div>
+        <figure><img src="images/structured-light.webp" alt="Illustration of five optical vortex modes"><figcaption>Optical vortex modes. <a href="https://www.engineering.upenn.edu/stories/penn-engineers-develop-first-tunable-chip-based-vortex-microlaser-and-detector-encode-e490e7983997/" target="_blank" rel="noopener">Penn Engineering, 2020</a>.</figcaption></figure>
+      </section>
+
+      <section class="research-area">
+        <div>
+          <h2>Phase-change materials</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean lacinia bibendum nulla sed consectetur. Nullam quis risus eget urna mollis ornare vel eu leo.</p>
+          <h3>Selected papers</h3>
+          <a class="paper-link" href="https://www.nature.com/articles/s41586-024-08156-8" target="_blank" rel="noopener">Electrically driven long-range solid-state amorphization in ferroic In₂Se₃<span>Nature · 2024</span></a>
+          <a class="paper-link" href="https://doi.org/10.1021/nl104537c" target="_blank" rel="noopener">High-Resolution TEM Study of Electrically-Driven Reversible Phase Change in Ge₂Sb₂Te₅ Nanowires<span>Nano Letters · 2011</span></a>
+        </div>
+        <figure class="phase-research-image"><img src="images/phase.webp" alt="Illustration of electrically driven amorphization in indium selenide"><figcaption>Phase-change illustration by Akanksha Jain, <a href="https://www.engineering.upenn.edu/stories/breakthrough-in-energy-efficient-avalanche-based-amorphization-could-revolutionize-data-storage/" target="_blank" rel="noopener">Penn Engineering, 2024</a>.</figcaption></figure>
+      </section>
+    </div>
+
+    <!-- PUBLICATIONS -->
+    <div class="page wrap" id="publications-page" data-page="publications" hidden>
+      <div class="page-heading">
+        <h1>Selected publications</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div>
+
+      <div class="publication-tools">
+        <label for="paper-search">Search papers
+          <input id="paper-search" type="search" placeholder="Title, author, or journal">
+        </label>
+        <label for="year-filter">Filter by year
+          <select id="year-filter">
+            <option value="all">All years</option>
+            <option value="2026">2026</option>
+            <option value="2025">2025</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2020">2020</option>
+            <option value="2019">2019</option>
+            <option value="2012">2012</option>
+            <option value="2011">2011</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="publication-list">
+        <article class="paper-row" data-year="2026"><span class="paper-year">2026</span><div><h3><a href="https://arxiv.org/abs/2609.38102" target="_blank" rel="noopener">Spatially dispersive photogalvanic effects as a probe of quantum geometric tensor</a></h3><p>Yicong Chen et al. · Ritesh Agarwal</p></div><div class="paper-journal">arXiv<span>Preprint</span></div></article>
+        <article class="paper-row" data-year="2026"><span class="paper-year">2026</span><div><h3><a href="https://arxiv.org/abs/2609.36353" target="_blank" rel="noopener">Quantum metric induced nonlinear transport in the hidden loop-current phase of kagome metal RbV₃Sb₅</a></h3><p>Jia-Chen Shi et al. · Ritesh Agarwal</p></div><div class="paper-journal">arXiv<span>Preprint</span></div></article>
+        <article class="paper-row" data-year="2026"><span class="paper-year">2026</span><div><h3><a href="https://doi.org/10.1021/acs.nanolett.6c02836" target="_blank" rel="noopener">Geometric Engineering of Flat Bands in a Single-Layer Photonic Graphene</a></h3><p>Dun Wang, Shupeng Xu, Jia-Chen Shi, Xuyang Li &amp; Ritesh Agarwal</p></div><div class="paper-journal">Nano Letters</div></article>
+        <article class="paper-row" data-year="2025"><span class="paper-year">2025</span><div><h3><a href="https://arxiv.org/abs/2509.23952" target="_blank" rel="noopener">General Framework for Twisted Bilayer Photonic Crystal with Interlayer Coupling and Far-Field Response</a></h3><p>Shupeng Xu, Dun Wang &amp; Ritesh Agarwal</p></div><div class="paper-journal">arXiv<span>Preprint</span></div></article>
+        <article class="paper-row" data-year="2025"><span class="paper-year">2025</span><div><h3><a href="https://doi.org/10.1103/PhysRevB.111.205108" target="_blank" rel="noopener">Topological phase transition from optical manipulation of chiral response in the one-dimensional correlated Weyl semimetal (TaSe₄)₂I</a></h3><p>Utkarsh Khandelwal, Harshvardhan Jog et al. · Ritesh Agarwal</p></div><div class="paper-journal">Physical Review B</div></article>
+        <article class="paper-row" data-year="2024"><span class="paper-year">2024</span><div><h3><a href="https://www.nature.com/articles/s41586-024-08156-8" target="_blank" rel="noopener">Electrically driven long-range solid-state amorphization in ferroic In₂Se₃</a></h3><p>Gaurav Modi, Shubham K. Parate et al. · Ritesh Agarwal</p></div><div class="paper-journal">Nature</div></article>
+        <article class="paper-row" data-year="2024"><span class="paper-year">2024</span><div><h3><a href="https://www.nature.com/articles/s41586-024-07949-1" target="_blank" rel="noopener">Opto-twistronic Hall effect in a three-dimensional spiral lattice</a></h3><p>Zhurun Ji, Yuzhou Zhao et al. · Ritesh Agarwal</p></div><div class="paper-journal">Nature</div></article>
+        <article class="paper-row" data-year="2023"><span class="paper-year">2023</span><div><h3><a href="https://doi.org/10.1103/PhysRevLett.131.053802" target="_blank" rel="noopener">Absence of Topological Protection of the Interface States in Z₂ Photonic Crystals</a></h3><p>Shupeng Xu, Yuhui Wang &amp; Ritesh Agarwal</p></div><div class="paper-journal">Physical Review Letters</div></article>
+        <article class="paper-row" data-year="2022"><span class="paper-year">2022</span><div><h3><a href="https://www.nature.com/articles/s41586-022-05339-z" target="_blank" rel="noopener">Spin–orbit microlaser emitting in a four-dimensional Hilbert space</a></h3><p>Zhifeng Zhang, Haoqi Zhao et al. · Ritesh Agarwal · Liang Feng</p></div><div class="paper-journal">Nature</div></article>
+        <article class="paper-row" data-year="2020"><span class="paper-year">2020</span><div><h3><a href="https://doi.org/10.1126/science.aba9192" target="_blank" rel="noopener">Photocurrent detection of the orbital angular momentum of light</a></h3><p>Zhurun Ji, Wenjing Liu et al. · Ritesh Agarwal</p></div><div class="paper-journal">Science</div></article>
+        <article class="paper-row" data-year="2019"><span class="paper-year">2019</span><div><h3><a href="https://www.nature.com/articles/s41563-019-0421-5" target="_blank" rel="noopener">Spatially dispersive circular photogalvanic effect in a Weyl semimetal</a></h3><p>Zhurun Ji, Gerui Liu et al. · Ritesh Agarwal</p></div><div class="paper-journal">Nature Materials</div></article>
+        <article class="paper-row" data-year="2012"><span class="paper-year">2012</span><div><h3><a href="https://pubmed.ncbi.nlm.nih.gov/22941404/" target="_blank" rel="noopener">All-optical active switching in individual semiconductor nanowires</a></h3><p>Brian Piccione, Chang-Hee Cho, Lambert K. van Vugt &amp; Ritesh Agarwal</p></div><div class="paper-journal">Nature Nanotechnology</div></article>
+        <article class="paper-row" data-year="2011"><span class="paper-year">2011</span><div><h3><a href="https://doi.org/10.1021/nl104537c" target="_blank" rel="noopener">High-Resolution Transmission Electron Microscopy Study of Electrically-Driven Reversible Phase Change in Ge₂Sb₂Te₅ Nanowires</a></h3><p>Agarwal Group and collaborators</p></div><div class="paper-journal">Nano Letters</div></article>
+      </div>
+
+      <p class="scholar-link">For the full publication record, see <a href="https://scholar.google.com/citations?hl=en&user=qK4q4IUAAAAJ" target="_blank" rel="noopener">Ritesh Agarwal on Google Scholar</a>.</p>
+    </div>
+
+    <!-- PEOPLE -->
+    <div class="page wrap" id="people-page" data-page="people" hidden>
+      <div class="page-heading"><h1>People</h1></div>
+      <section class="person">
+        <figure><img src="images/ritesh.webp" alt="Ritesh Agarwal beside a microscope in his laboratory"><figcaption>Ritesh Agarwal in the lab. <a href="https://www.engineering.upenn.edu/stories/breakthrough-in-energy-efficient-avalanche-based-amorphization-could-revolutionize-data-storage/" target="_blank" rel="noopener">Photo: Penn Engineering</a>.</figcaption></figure>
+        <div>
+          <h2>Ritesh Agarwal</h2>
+          <p class="position">Professor of Materials Science and Engineering<br>Srinivasa Ramanujan Distinguished Scholar</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec ullamcorper nulla non metus auctor fringilla.</p>
+          <div class="person-links"><a href="mailto:riteshag@seas.upenn.edu">riteshag@seas.upenn.edu</a><a href="https://viest.upenn.edu/people/ritesh-agarwal" target="_blank" rel="noopener">Penn profile</a><a href="https://scholar.google.com/citations?hl=en&user=qK4q4IUAAAAJ" target="_blank" rel="noopener">Publications</a></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- NEWS -->
+    <div class="page wrap" id="news-page" data-page="news" hidden>
+      <div class="page-heading"><h1>News</h1></div>
+      <div class="news-list">
+        <article><time datetime="2025-10-21">21 OCT 2025</time><h2>Ritesh Agarwal elected an APS Fellow</h2><p>Penn Almanac reports his election to the 2025 class of APS Fellows.</p><a href="https://almanac.upenn.edu/articles/ritesh-agarwal-and-douglas-jerolmack-2025-american-physical-society-fellows" target="_blank" rel="noopener">Penn Almanac</a></article>
+        <article><time datetime="2024-11-14">14 NOV 2024</time><h2>Electrically driven amorphization in In₂Se₃</h2><p>Penn Today covers the group’s 2024 Nature paper on solid-state amorphization.</p><a href="https://penntoday.upenn.edu/news/breakthrough-energy-saving-process-could-transform-data-storage" target="_blank" rel="noopener">Penn Today</a></article>
+        <article><time datetime="2022-12-06">06 DEC 2022</time><h2>Srinivasa Ramanujan Distinguished Scholar</h2><p>Penn Almanac announces Ritesh Agarwal’s distinguished scholar appointment.</p><a href="https://almanac.upenn.edu/articles/ritesh-agarwal-srinivasa-ramanujan-distinguished-scholar" target="_blank" rel="noopener">Penn Almanac</a></article>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="page wrap" id="contact-page" data-page="contact" hidden>
+      <div class="page-heading">
+        <h1>Contact</h1>
+        <p>Interested in joining the group, collaborating, or learning more about our work? Please contact us using the information listed below.</p>
+      </div>
+      <div class="contact-grid">
+        <div><h2>Ritesh Agarwal</h2><a href="mailto:riteshag@seas.upenn.edu">riteshag@seas.upenn.edu</a><p>Department of Materials Science and Engineering<br>University of Pennsylvania</p></div>
+        <div><h2>Laboratory</h2><address>Laboratory for Research on the Structure of Matter<br>3231 Walnut Street<br>Philadelphia, PA 19104</address></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <a href="https://www.seas.upenn.edu/" target="_blank" rel="noopener"><img src="images/penn-engineering.png" alt="Penn Engineering"></a>
+      <a href="mailto:riteshag@seas.upenn.edu">riteshag@seas.upenn.edu</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
