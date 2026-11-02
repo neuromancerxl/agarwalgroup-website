@@ -30,7 +30,7 @@ function startSlideshow() {
   if (homeIsOpen && !mouseIsOverSlider && !reducedMotion) {
     slideTimer = setInterval(function() {
       showSlide(currentSlide + 1);
-    }, 6500);
+    }, 5000);
   }
 }
 
@@ -56,30 +56,95 @@ slideshow.addEventListener("mouseleave", function() {
 
 showSlide(0);
 
-// Publication search and year filter
+// Publication search, topic, and year filters
 const paperSearch = document.getElementById("paper-search");
 const yearFilter = document.getElementById("year-filter");
+const topicButtons = document.querySelectorAll(".publication-topics button");
 const publicationRows = document.querySelectorAll("#publication-list .paper-row");
+const noPublications = document.getElementById("no-publications");
+let selectedTopic = "all";
 
 function filterPublications() {
   const searchText = paperSearch.value.toLowerCase().trim();
   const selectedYear = yearFilter.value;
+  let matchingPapers = 0;
 
   publicationRows.forEach(function(row) {
     const textMatches = row.textContent.toLowerCase().includes(searchText);
     const yearMatches = selectedYear === "all" || row.dataset.year === selectedYear;
-    row.hidden = !(textMatches && yearMatches);
+    const topics = (row.dataset.topics || "").split(/\s+/);
+    const topicMatches = selectedTopic === "all" || topics.includes(selectedTopic);
+    row.hidden = !(textMatches && yearMatches && topicMatches);
+    if (!row.hidden) matchingPapers++;
   });
+
+  noPublications.hidden = matchingPapers > 0;
 }
 
 paperSearch.addEventListener("input", filterPublications);
 yearFilter.addEventListener("change", filterPublications);
 
+topicButtons.forEach(function(button) {
+  button.addEventListener("click", function() {
+    selectedTopic = button.dataset.topic;
+    topicButtons.forEach(function(topicButton) {
+      const isSelected = topicButton === button;
+      topicButton.classList.toggle("active", isSelected);
+      topicButton.setAttribute("aria-pressed", String(isSelected));
+    });
+    filterPublications();
+  });
+});
+
+filterPublications();
+
 // Simple navigation between the demonstration pages
 const pageNames = ["home", "research", "publications", "people", "news", "contact"];
+const sectionMenus = document.querySelectorAll(".research-nav, .people-nav");
+const pageSections = document.querySelectorAll(".research-area, .people-section");
+
+function updateSectionNavigation() {
+  const readingLine = Math.min(200, window.innerHeight / 3);
+
+  sectionMenus.forEach(function(menu) {
+    const page = menu.closest("[data-page]");
+    if (page.hidden) return;
+
+    const links = menu.querySelectorAll("a");
+    const sections = Array.from(links, function(link) {
+      return document.getElementById(link.getAttribute("href").slice(1));
+    });
+    let currentSection = sections[0];
+
+    sections.forEach(function(section) {
+      if (section.getBoundingClientRect().top <= readingLine) {
+        currentSection = section;
+      }
+    });
+
+    // The last heading may not reach the reading line before the page ends.
+    if (window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
+      currentSection = sections[sections.length - 1];
+    }
+
+    links.forEach(function(link) {
+      const isCurrent = link.getAttribute("href") === "#" + currentSection.id;
+      link.classList.toggle("active", isCurrent);
+      if (isCurrent) {
+        link.setAttribute("aria-current", "location");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  });
+}
 
 function openPage() {
   let pageName = window.location.hash.replace("#", "") || "home";
+  const pageSection = Array.from(pageSections).find(function(section) {
+    return section.id === pageName;
+  });
+  if (pageSection) pageName = pageSection.closest("[data-page]").dataset.page;
   if (!pageNames.includes(pageName)) pageName = "home";
 
   document.querySelectorAll("[data-page]").forEach(function(page) {
@@ -93,16 +158,23 @@ function openPage() {
   const titles = {
     home: "Agarwal Group",
     research: "Research",
-    publications: "Selected publications",
+    publications: "Publications",
     people: "People",
     news: "News",
     contact: "Contact"
   };
 
   document.title = titles[pageName] + " | University of Pennsylvania";
-  window.scrollTo(0, 0);
+  if (pageSection) {
+    pageSection.scrollIntoView({ block: "start" });
+  } else {
+    window.scrollTo(0, 0);
+  }
+  updateSectionNavigation();
   startSlideshow();
 }
 
 window.addEventListener("hashchange", openPage);
+window.addEventListener("scroll", updateSectionNavigation, { passive: true });
+window.addEventListener("resize", updateSectionNavigation);
 openPage();

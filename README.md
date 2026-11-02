@@ -95,7 +95,7 @@ The slideshow advances every 6.5 seconds. It pauses while the pointer is over it
 
 ### Research
 
-The introductory sentence beginning “The group combines…” remains because it accurately describes the broad experimental approach. The three redundant jump links were removed.
+The introductory sentence describes the group’s broad experimental approach. A topic menu provides direct links to the three research sections.
 
 Each research area currently contains:
 
@@ -106,20 +106,34 @@ Each research area currently contains:
 
 The placeholder copy prevents the demonstration from presenting an unreviewed interpretation of the group’s research as approved language.
 
+Each topic now has exactly 150 words of placeholder description in two paragraphs. On wide screens, a sticky menu on the left links to the three topics and marks the topic being read. Below 960 pixels, the menu moves above the content. Its links use ordinary section IDs, such as `#nanophotonics`; `openPage()` recognizes these IDs and keeps Research open on clicks, refreshes, and browser history navigation.
+
+Research figures use a consistent 4:3 frame with `object-fit: contain`, so diagrams and labels remain visible. Descriptions wrap around the figures on wide screens, while selected papers stay below both text and figure. Below 760 pixels, the figures and text stack. To change a figure’s background, set `--research-image-background` on its figure class; `.phase-research-image` shows an example. Research figures remain static.
+
 ### Publications
 
-The page contains 13 selected papers written directly as HTML `<article>` elements. It keeps two simple controls:
+The Publications page contains 13 papers written directly as HTML `<article>` elements. A horizontal row above the search controls filters the list by research topic:
 
-- text search;
-- filter by year.
+- All;
+- Quantum materials;
+- Nanophotonics;
+- Phase-change materials.
 
-The research-topic buttons and live result counter were removed because they made the demonstration feel more complete than it currently is.
+The active topic has a burgundy underline. On narrow screens, the topic row scrolls horizontally. Topic selection, text search, and the year filter work together; the existing newest-first order is preserved. An empty result shows “No papers match these filters.”
 
-The filtering code is elementary. It loops over every paper row, checks whether the row contains the typed text, checks its `data-year`, and sets `hidden` to true or false. There is no database, search service, or special library.
+Each paper’s `data-topics` attribute contains topic IDs separated by spaces, for example `data-topics="quantum-materials nanophotonics"`. One paper can belong to multiple topics without duplicating its row. Initial assignments follow the existing Research page selections; five papers still need topic review and remain visible under All. To assign one, edit its `data-topics` attribute. These attributes are temporary metadata until the shared publication catalog is built.
+
+The filtering code loops over the rows, checks their text, `data-year`, and `data-topics`, then sets `hidden`. There is no database, external metadata lookup, or special library.
 
 ### People
 
-Only Ritesh Agarwal appears. His title, photograph, email, Penn profile, and publications link remain. The biographical description is placeholder copy until the group approves the language and current roster.
+People has three sections: Principal investigator, PhD students, and Alumni. Its sticky PI / PhDs / Alumni menu uses the same styles and navigation behavior as Research, including direct section links such as `#phd-students` and an active marker while scrolling. On narrower screens, the menu moves above the content.
+
+Ritesh Agarwal’s profile keeps his title, photograph, source credit, email, Penn profile, and publications link. His biography contains exactly 200 words of Lorem ipsum in two paragraphs.
+
+There are seven PhD profile placeholders, arranged two per row above 760 pixels and one per row below. Each has a square photo placeholder, a name, a `YYYY–present` joining-year field, and exactly 100 words of Lorem ipsum. Replace the placeholder photo `<div>` with an `<img class="member-photo" src="images/your-photo.webp" alt="Name">` when a portrait is available. Student names, dates, and photographs are deliberately unspecified until the roster is supplied.
+
+Alumni uses a three-column table: name, graduation year, and present position (role and institution). Three clearly marked example rows demonstrate the layout without claiming an actual alumni count. Replace those rows with approved information; remove or add rows as needed. On small screens, the table can scroll horizontally.
 
 ### News
 
@@ -204,7 +218,7 @@ Open `index.html`, use `Ctrl+F` to find the visible sentence, edit it, and save.
 
 ### Replace placeholder research copy
 
-Search `index.html` for `Lorem ipsum`. There are five placeholder paragraphs: three research descriptions, the Publications introduction, and the PI description.
+Find the three `research-description` blocks in `index.html`. Each contains two placeholder paragraphs totaling 150 words. Replace both paragraphs with approved copy. The PI description also remains placeholder text; the Publications introduction has been removed.
 
 ### Change a homepage slide
 
@@ -215,6 +229,7 @@ Find the relevant `<figure class="slide">` in `index.html`. Replace the file in 
 Copy one complete publication `<article class="paper-row">` inside `#publication-list`. Update:
 
 - `data-year`;
+- `data-topics` (space-separated topic IDs, or empty until reviewed);
 - the visible year;
 - paper URL;
 - title;
@@ -262,7 +277,6 @@ Real demonstration content:
 Provisional content:
 
 - research-area descriptions;
-- Publications page introduction;
 - PI biographical paragraph;
 - complete current group roster;
 - the selection and ordering of papers and news;
