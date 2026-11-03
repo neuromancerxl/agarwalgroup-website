@@ -56,48 +56,6 @@ slideshow.addEventListener("mouseleave", function() {
 
 showSlide(0);
 
-// Publication search, topic, and year filters
-const paperSearch = document.getElementById("paper-search");
-const yearFilter = document.getElementById("year-filter");
-const topicButtons = document.querySelectorAll(".publication-topics button");
-const publicationRows = document.querySelectorAll("#publication-list .paper-row");
-const noPublications = document.getElementById("no-publications");
-let selectedTopic = "all";
-
-function filterPublications() {
-  const searchText = paperSearch.value.toLowerCase().trim();
-  const selectedYear = yearFilter.value;
-  let matchingPapers = 0;
-
-  publicationRows.forEach(function(row) {
-    const textMatches = row.textContent.toLowerCase().includes(searchText);
-    const yearMatches = selectedYear === "all" || row.dataset.year === selectedYear;
-    const topics = (row.dataset.topics || "").split(/\s+/);
-    const topicMatches = selectedTopic === "all" || topics.includes(selectedTopic);
-    row.hidden = !(textMatches && yearMatches && topicMatches);
-    if (!row.hidden) matchingPapers++;
-  });
-
-  noPublications.hidden = matchingPapers > 0;
-}
-
-paperSearch.addEventListener("input", filterPublications);
-yearFilter.addEventListener("change", filterPublications);
-
-topicButtons.forEach(function(button) {
-  button.addEventListener("click", function() {
-    selectedTopic = button.dataset.topic;
-    topicButtons.forEach(function(topicButton) {
-      const isSelected = topicButton === button;
-      topicButton.classList.toggle("active", isSelected);
-      topicButton.setAttribute("aria-pressed", String(isSelected));
-    });
-    filterPublications();
-  });
-});
-
-filterPublications();
-
 // Simple navigation between the demonstration pages
 const pageNames = ["home", "research", "publications", "people", "news", "contact"];
 const sectionMenus = document.querySelectorAll(".research-nav, .people-nav");
@@ -177,4 +135,12 @@ function openPage() {
 window.addEventListener("hashchange", openPage);
 window.addEventListener("scroll", updateSectionNavigation, { passive: true });
 window.addEventListener("resize", updateSectionNavigation);
+window.addEventListener("publicationsloaded", function() {
+  // Loading the selected papers changes section heights; restore a direct section link.
+  const section = Array.from(pageSections).find(function(section) {
+    return "#" + section.id === window.location.hash;
+  });
+  if (section) section.scrollIntoView({ block: "start" });
+  updateSectionNavigation();
+});
 openPage();

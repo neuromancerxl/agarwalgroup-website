@@ -1,0 +1,238 @@
+{
+  "schemaVersion": 1,
+  "topics": [
+    {
+      "id": "quantum-materials",
+      "label": "Quantum materials"
+    },
+    {
+      "id": "nanophotonics",
+      "label": "Nanophotonics"
+    },
+    {
+      "id": "phase-change",
+      "label": "Phase-change materials"
+    }
+  ],
+  "papers": [
+    {
+      "id": "chen2026photogalvanic",
+      "type": "article",
+      "title": "Spatially dispersive photogalvanic effects as a probe of quantum geometric tensor",
+      "authors": [
+        "Yicong Chen",
+        "Ritesh Agarwal"
+      ],
+      "authorsIncomplete": true,
+      "year": 2026,
+      "journal": "arXiv",
+      "url": "https://arxiv.org/abs/2609.38102",
+      "status": "preprint",
+      "topics": [
+        "quantum-materials"
+      ]
+    },
+    {
+      "id": "shi2026quantummetric",
+      "type": "article",
+      "title": "Quantum metric induced nonlinear transport in the hidden loop-current phase of kagome metal RbV₃Sb₅",
+      "authors": [
+        "Jia-Chen Shi",
+        "Ritesh Agarwal"
+      ],
+      "authorsIncomplete": true,
+      "year": 2026,
+      "journal": "arXiv",
+      "url": "https://arxiv.org/abs/2609.36353",
+      "status": "preprint",
+      "topics": [
+        "quantum-materials"
+      ]
+    },
+    {
+      "id": "wang2026flatbands",
+      "type": "article",
+      "title": "Geometric Engineering of Flat Bands in a Single-Layer Photonic Graphene",
+      "authors": [
+        "Dun Wang",
+        "Shupeng Xu",
+        "Jia-Chen Shi",
+        "Xuyang Li",
+        "Ritesh Agarwal"
+      ],
+      "year": 2026,
+      "journal": "Nano Letters",
+      "doi": "10.1021/acs.nanolett.6c02836",
+      "status": "published",
+      "topics": [
+        "nanophotonics"
+      ]
+    },
+    {
+      "id": "xu2025twistedbilayer",
+      "type": "article",
+      "title": "General Framework for Twisted Bilayer Photonic Crystal with Interlayer Coupling and Far-Field Response",
+      "authors": [
+        "Shupeng Xu",
+        "Dun Wang",
+        "Ritesh Agarwal"
+      ],
+      "year": 2025,
+      "journal": "arXiv",
+      "url": "https://arxiv.org/abs/2509.23952",
+      "status": "preprint",
+      "topics": []
+    },
+    {
+      "id": "khandelwal2025chiralresponse",
+      "type": "article",
+      "title": "Topological phase transition from optical manipulation of chiral response in the one-dimensional correlated Weyl semimetal (TaSe₄)₂I",
+      "authors": [
+        "Utkarsh Khandelwal",
+        "Harshvardhan Jog",
+        "Ritesh Agarwal"
+      ],
+      "authorsIncomplete": true,
+      "year": 2025,
+      "journal": "Physical Review B",
+      "doi": "10.1103/PhysRevB.111.205108",
+      "status": "published",
+      "topics": [
+        "quantum-materials"
+      ]
+    },
+    {
+      "id": "modi2024amorphization",
+      "type": "article",
+      "title": "Electrically driven long-range solid-state amorphization in ferroic In₂Se₃",
+      "authors": [
+        "Gaurav Modi",
+        "Shubham K. Parate",
+        "Ritesh Agarwal"
+      ],
+      "authorsIncomplete": true,
+      "year": 2024,
+      "journal": "Nature",
+      "url": "https://www.nature.com/articles/s41586-024-08156-8",
+      "status": "published",
+      "topics": [
+        "phase-change"
+      ]
+    },
+    {
+      "id": "ji2024optotwistronic",
+      "type": "article",
+      "title": "Opto-twistronic Hall effect in a three-dimensional spiral lattice",
+      "authors": [
+        "Zhurun Ji",
+        "Yuzhou Zhao",
+        "Ritesh Agarwal"
+      ],
+      "authorsIncomplete": true,
+      "year": 2024,
+      "journal": "Nature",
+      "url": "https://www.nature.com/articles/s41586-024-07949-1",
+      "status": "published",
+      "topics": []
+    },
+    {
+      "id": "xu2023photoniccrystals",
+      "type": "article",
+      "title": "Absence of Topological Protection of the Interface States in Z₂ Photonic Crystals",
+      "authors": [
+        "Shupeng Xu",
+        "Yuhui Wang",
+        "Ritesh Agarwal"
+      ],
+      "year": 2023,
+      "journal": "Physical Review Letters",
+      "doi": "10.1103/PhysRevLett.131.053802",
+      "status": "published",
+      "topics": []
+    },
+    {
+      "id": "zhang2022microlaser",
+      "type": "article",
+      "title": "Spin–orbit microlaser emitting in a four-dimensional Hilbert space",
+      "authors": [
+        "Zhifeng Zhang",
+        "Haoqi Zhao",
+        "Ritesh Agarwal",
+        "Liang Feng"
+      ],
+      "authorsIncomplete": true,
+      "year": 2022,
+      "journal": "Nature",
+      "url": "https://www.nature.com/articles/s41586-022-05339-z",
+      "status": "published",
+      "topics": [
+        "nanophotonics"
+      ]
+    },
+    {
+      "id": "ji2020orbitalangularmomentum",
+      "type": "article",
+      "title": "Photocurrent detection of the orbital angular momentum of light",
+      "authors": [
+        "Zhurun Ji",
+        "Wenjing Liu",
+        "Ritesh Agarwal"
+      ],
+      "authorsIncomplete": true,
+      "year": 2020,
+      "journal": "Science",
+      "doi": "10.1126/science.aba9192",
+      "status": "published",
+      "topics": [
+        "nanophotonics"
+      ]
+    },
+    {
+      "id": "ji2019photogalvanic",
+      "type": "article",
+      "title": "Spatially dispersive circular photogalvanic effect in a Weyl semimetal",
+      "authors": [
+        "Zhurun Ji",
+        "Gerui Liu",
+        "Ritesh Agarwal"
+      ],
+      "authorsIncomplete": true,
+      "year": 2019,
+      "journal": "Nature Materials",
+      "url": "https://www.nature.com/articles/s41563-019-0421-5",
+      "status": "published",
+      "topics": []
+    },
+    {
+      "id": "piccione2012nanowires",
+      "type": "article",
+      "title": "All-optical active switching in individual semiconductor nanowires",
+      "authors": [
+        "Brian Piccione",
+        "Chang-Hee Cho",
+        "Lambert K. van Vugt",
+        "Ritesh Agarwal"
+      ],
+      "year": 2012,
+      "journal": "Nature Nanotechnology",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22941404/",
+      "status": "published",
+      "topics": []
+    },
+    {
+      "id": "phasechange2011nanowires",
+      "type": "article",
+      "title": "High-Resolution Transmission Electron Microscopy Study of Electrically-Driven Reversible Phase Change in Ge₂Sb₂Te₅ Nanowires",
+      "authors": [],
+      "authorsIncomplete": true,
+      "authorNote": "Agarwal Group and collaborators",
+      "year": 2011,
+      "journal": "Nano Letters",
+      "doi": "10.1021/nl104537c",
+      "status": "published",
+      "topics": [
+        "phase-change"
+      ]
+    }
+  ]
+}

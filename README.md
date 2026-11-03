@@ -1,6 +1,6 @@
 # Agarwal Group demonstration website
 
-This folder contains a static demonstration of the proposed Agarwal Group website. It uses ordinary HTML, CSS, and JavaScript. There is no framework, package manager, database, PHP, or build step.
+This folder contains a static demonstration of the proposed Agarwal Group website. It uses ordinary HTML, CSS, JavaScript, and a local JSON publication catalog. There is no framework, package manager, database server, PHP, or build step.
 
 The demonstration is intentionally provisional. The homepage has the approved visual direction, while unapproved research and profile descriptions use `Lorem ipsum` placeholder text. The site contains no author, creator, or designer attribution.
 
@@ -22,9 +22,9 @@ Keep VS Code and the browser open together. Save a change with `Ctrl+S`; Live Se
 
 Do not use the **Run Code** button for this project. HTML is displayed by a browser, and Live Server provides the small local web server that the browser expects.
 
-### Quick method without an extension
+### Why an HTTP preview is required
 
-Double-click `index.html`, or right-click it and choose Edge or Chrome. The site works when opened directly because it does not fetch local data with JavaScript. You will need to refresh the browser manually after saving changes.
+Use Live Server or another local HTTP server. The publication code fetches `pubbase.json` from the same server as the page. Opening `index.html` directly as a `file://` URL can prevent that fetch from working. No external publication service is contacted.
 
 ### If images or fonts disappear
 
@@ -35,6 +35,8 @@ agarwal-demo/
 ├── index.html
 ├── style.css
 ├── script.js
+├── publications.js
+├── pubbase.json
 ├── fonts/
 └── images/
 ```
@@ -45,9 +47,11 @@ For example, `src="images/phase.webp"` means the browser expects an `images` fol
 
 | File or folder | Purpose |
 | --- | --- |
-| `index.html` | All page content, links, headings, paper entries, captions, and contact information |
+| `index.html` | Page structure, publication ID selections, headings, captions, and contact information |
 | `style.css` | Colors, fonts, spacing, desktop layout, mobile layout, and visual states |
-| `script.js` | Slideshow, active research-topic highlight, publication filtering, and navigation between sections |
+| `script.js` | Slideshow, active research-topic highlight, and navigation between pages and sections |
+| `publications.js` | Catalog loading, author formatting, paper rendering, publication filters, and pagination |
+| `pubbase.json` | Shared topic definitions and the publication records used throughout the site |
 | `images/` | Research figures, Ritesh Agarwal photograph, and Penn Engineering logo |
 | `fonts/` | Local font files, so the design does not depend on Google Fonts loading |
 
@@ -78,7 +82,7 @@ For the eventual WordPress website, these sections will become separate WordPres
 
 ### Header
 
-The header contains the group name, Penn affiliation, and five navigation links. It uses the same dark background as the homepage opening so the two areas appear continuous.
+The header contains the group name, Penn affiliation, and six navigation links. It uses the same dark background as the homepage opening so the two areas appear continuous.
 
 ### Homepage
 
@@ -112,18 +116,26 @@ Research figures use a consistent 4:3 frame with `object-fit: contain`, so diagr
 
 ### Publications
 
-The Publications page contains 13 papers written directly as HTML `<article>` elements. A horizontal row above the search controls filters the list by research topic:
+`pubbase.json` holds the publication catalog. `schemaVersion` identifies its format, `topics` defines the shared topic IDs and labels, and `papers` contains the records. Each paper has a permanent `id`; full names and titles stay in the catalog, and the display is generated from them.
+
+Home and Research keep their curated selections in `data-paper-ids` attributes. IDs are separated by whitespace and displayed in the listed order. Home uses paper rows; Research uses compact title, journal, year, and optional Preprint links. Publications automatically includes every paper in the catalog. Repeated citation metadata has been removed from these HTML lists.
+
+A horizontal row above the Publications search controls filters the list by research topic:
 
 - All;
 - Quantum materials;
 - Nanophotonics;
 - Phase-change materials.
 
-The active topic has a burgundy underline. On narrow screens, the topic row scrolls horizontally. Topic selection, text search, and the year filter work together; the existing newest-first order is preserved. An empty result shows “No papers match these filters.”
+Topic buttons and year options are generated from the catalog. The active topic has a burgundy underline. On narrow screens, the topic row scrolls horizontally. Topic selection, text search, and year work together across the entire catalog. Search includes full author names and their displayed initials. Results are ordered newest year first, retaining JSON order within each year. An empty result shows “No papers match these filters.”
 
-Each paper’s `data-topics` attribute contains topic IDs separated by spaces, for example `data-topics="quantum-materials nanophotonics"`. One paper can belong to multiple topics without duplicating its row. Initial assignments follow the existing Research page selections; five papers still need topic review and remain visible under All. To assign one, edit its `data-topics` attribute. These attributes are temporary metadata until the shared publication catalog is built.
+Each record’s `topics` array contains topic IDs, for example `["quantum-materials", "nanophotonics"]`. One paper can belong to multiple topics without duplicating its record. Initial assignments follow the Research selections; five papers still need topic review and remain visible under All. Nine records have incomplete author lists, marked with `authorsIncomplete: true`. The 2011 entry retains its existing collective attribution in `authorNote` until its authors are supplied.
 
-The filtering code loops over the rows, checks their text, `data-year`, and `data-topics`, then sets `hidden`. There is no database, external metadata lookup, or special library.
+Author lines use initials while preserving hyphenated given names and common surname particles. Ritesh Agarwal is displayed separately at the end as `R. Agarwal`, following a middle dot. Up to three other names are shown; longer or incomplete lists append `et al.`. Collaboration-specific positioning is deferred, and the stored author order remains unchanged.
+
+Publications shows ten matching papers per page. Page numbers use the same underline treatment as topic filters. Previous appears only after the first page, and Next only before the last. Large catalogs use an abbreviated number range. Pagination disappears when results fit on one page. Changing any filter resets to page one; clicking a page moves focus and scroll position to the result list. Home and Research are not paginated.
+
+`publications.js` fetches the catalog once per page load and uses ordinary DOM elements and text content to render it. A failed load shows a short availability message; technical details go to the browser console. No external metadata lookup, parser library, or build step is involved.
 
 ### People
 
@@ -226,18 +238,20 @@ Find the relevant `<figure class="slide">` in `index.html`. Replace the file in 
 
 ### Add a publication
 
-Copy one complete publication `<article class="paper-row">` inside `#publication-list`. Update:
+Add a record to the `papers` array in `pubbase.json`, with a new permanent ID. Supply its full title, authors in publication order, numeric year, journal, status, and topic IDs. Use either a DOI identifier in `doi` or a complete primary link in `url`; an explicit URL takes precedence. The current record type is `article`, and status is `published` or `preprint`.
 
-- `data-year`;
-- `data-topics` (space-separated topic IDs, or empty until reviewed);
-- the visible year;
-- paper URL;
-- title;
-- author line;
-- journal;
-- optional Preprint label.
+Keep full names in `authors`; the display code supplies initials. Set `authorsIncomplete` to `true` while names are missing, then remove that flag when the full list is entered. Use an empty `topics` array until classification is reviewed. Do not change an existing ID without updating its selections.
 
-If the year is new, add a matching `<option>` to the `year-filter` select. Search works automatically because it reads the row’s visible text.
+The paper appears automatically in Publications after refresh, including the relevant year option and pagination. To feature it on Home or Research, add its ID to that section’s `data-paper-ids` list. The order of IDs controls the order of those selected lists. Editing a record updates every location that references it.
+
+For example, a compact Research list can select two papers without copying their metadata:
+
+```html
+<div
+  class="research-papers"
+  data-paper-ids="wang2026flatbands zhang2022microlaser"
+></div>
+```
 
 ### Add a news item
 
