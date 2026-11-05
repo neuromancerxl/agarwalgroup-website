@@ -1,146 +1,117 @@
-// Slideshow
-const slides = document.querySelectorAll(".slide");
-const topicWords = document.querySelectorAll("[data-hero-topic]");
-const slideCount = document.getElementById("slide-count");
-const slideshow = document.querySelector(".slideshow");
-let currentSlide = 0;
-let slideTimer;
-let mouseIsOverSlider = false;
+(() => {
+  "use strict";
 
-function showSlide(number) {
-  currentSlide = (number + slides.length) % slides.length;
-
-  slides.forEach(function(slide, index) {
-    slide.hidden = index !== currentSlide;
-  });
-
-  const currentTopic = slides[currentSlide].dataset.topic;
-  topicWords.forEach(function(word) {
-    word.classList.toggle("active-topic", word.dataset.heroTopic === currentTopic);
-  });
-
-  slideCount.textContent = String(currentSlide + 1).padStart(2, "0") + " / " + String(slides.length).padStart(2, "0");
-}
-
-function startSlideshow() {
-  clearInterval(slideTimer);
-  const homeIsOpen = !document.getElementById("home-page").hidden;
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  if (homeIsOpen && !mouseIsOverSlider && !reducedMotion) {
-    slideTimer = setInterval(function() {
-      showSlide(currentSlide + 1);
-    }, 5000);
-  }
-}
-
-document.getElementById("previous-slide").addEventListener("click", function() {
-  showSlide(currentSlide - 1);
-  startSlideshow();
-});
-
-document.getElementById("next-slide").addEventListener("click", function() {
-  showSlide(currentSlide + 1);
-  startSlideshow();
-});
-
-slideshow.addEventListener("mouseenter", function() {
-  mouseIsOverSlider = true;
-  startSlideshow();
-});
-
-slideshow.addEventListener("mouseleave", function() {
-  mouseIsOverSlider = false;
-  startSlideshow();
-});
-
-showSlide(0);
-
-// Simple navigation between the demonstration pages
-const pageNames = ["home", "research", "publications", "people", "news", "contact"];
-const sectionMenus = document.querySelectorAll(".research-nav, .people-nav");
-const pageSections = document.querySelectorAll(".research-area, .people-section");
-
-function updateSectionNavigation() {
-  const readingLine = Math.min(200, window.innerHeight / 3);
-
-  sectionMenus.forEach(function(menu) {
-    const page = menu.closest("[data-page]");
-    if (page.hidden) return;
-
-    const links = menu.querySelectorAll("a");
-    const sections = Array.from(links, function(link) {
-      return document.getElementById(link.getAttribute("href").slice(1));
+  // The editor uses an ordinary Gallery. Playback is a frontend enhancement only.
+  document.querySelectorAll(".is-style-agarwal-slideshow").forEach(function (gallery) {
+    const slides = Array.from(gallery.children).filter(function (child) {
+      return child.classList.contains("wp-block-image");
     });
-    let currentSection = sections[0];
+    if (slides.length < 2) return;
 
-    sections.forEach(function(section) {
-      if (section.getBoundingClientRect().top <= readingLine) {
-        currentSection = section;
-      }
-    });
+    const container = gallery.closest(".slideshow") || gallery.parentElement;
+    const hero = gallery.closest(".home-intro");
+    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let current = 0;
+    let paused = motionPreference.matches;
+    let hovered = false;
+    let timer;
+    const controls = document.createElement("div");
+    controls.className = "slide-controls";
+    const count = document.createElement("span");
+    const buttons = document.createElement("div");
 
-    // The last heading may not reach the reading line before the page ends.
-    if (window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
-      currentSection = sections[sections.length - 1];
+    function button(label, accessibleLabel, action) {
+      const element = document.createElement("button");
+      element.type = "button";
+      element.textContent = label;
+      element.setAttribute("aria-label", accessibleLabel);
+      element.addEventListener("click", action);
+      buttons.append(element);
+      return element;
     }
 
-    links.forEach(function(link) {
-      const isCurrent = link.getAttribute("href") === "#" + currentSection.id;
-      link.classList.toggle("active", isCurrent);
-      if (isCurrent) {
-        link.setAttribute("aria-current", "location");
-      } else {
-        link.removeAttribute("aria-current");
-      }
+    const playback = button("Pause", "Pause automatic slideshow", function () {
+      paused = !paused;
+      schedule();
     });
+    button("‹ Prev", "Previous research image", function () { show(current - 1); schedule(); });
+    button("Next ›", "Next research image", function () { show(current + 1); schedule(); });
+    controls.append(count, buttons);
+    gallery.after(controls);
+
+    function show(index) {
+      current = (index + slides.length) % slides.length;
+      slides.forEach(function (slide, number) { slide.hidden = number !== current; });
+      count.textContent = String(current + 1).padStart(2, "0") + " / " + String(slides.length).padStart(2, "0");
+      if (hero) {
+        ["quantum", "photonics", "phase"].forEach(function (topic) {
+          const word = hero.querySelector(".hero-" + topic);
+          if (word) word.classList.toggle("active-topic", slides[current].classList.contains(topic + "-slide"));
+        });
+      }
+    }
+
+    function schedule() {
+      clearInterval(timer);
+      playback.textContent = paused ? "Play" : "Pause";
+      playback.setAttribute("aria-label", paused ? "Play automatic slideshow" : "Pause automatic slideshow");
+      playback.setAttribute("aria-pressed", String(paused));
+      if (!paused && !hovered && !container.contains(document.activeElement) && !document.hidden) {
+        timer = setInterval(function () { show(current + 1); }, 5000);
+      }
+    }
+
+    container.addEventListener("mouseenter", function () { hovered = true; schedule(); });
+    container.addEventListener("mouseleave", function () { hovered = false; schedule(); });
+    container.addEventListener("focusin", schedule);
+    container.addEventListener("focusout", function () { setTimeout(schedule, 0); });
+    document.addEventListener("visibilitychange", schedule);
+    motionPreference.addEventListener("change", function () { paused = motionPreference.matches; schedule(); });
+    show(0);
+    schedule();
   });
-}
 
-function openPage() {
-  let pageName = window.location.hash.replace("#", "") || "home";
-  const pageSection = Array.from(pageSections).find(function(section) {
-    return section.id === pageName;
-  });
-  if (pageSection) pageName = pageSection.closest("[data-page]").dataset.page;
-  if (!pageNames.includes(pageName)) pageName = "home";
-
-  document.querySelectorAll("[data-page]").forEach(function(page) {
-    page.hidden = page.dataset.page !== pageName;
-  });
-
-  document.querySelectorAll(".main-nav a").forEach(function(link) {
-    link.classList.toggle("active", link.getAttribute("href") === "#" + pageName);
-  });
-
-  const titles = {
-    home: "Agarwal Group",
-    research: "Research",
-    publications: "Publications",
-    people: "People",
-    news: "News",
-    contact: "Contact"
-  };
-
-  document.title = titles[pageName] + " | University of Pennsylvania";
-  if (pageSection) {
-    pageSection.scrollIntoView({ block: "start" });
-  } else {
-    window.scrollTo(0, 0);
+  const menus = Array.from(document.querySelectorAll(".research-nav, .people-nav"));
+  let scrollPending = false;
+  function updateSectionNavigation() {
+    scrollPending = false;
+    const readingLine = Math.min(200, window.innerHeight / 3);
+    menus.forEach(function (menu) {
+      const links = Array.from(menu.querySelectorAll('a[href^="#"]'));
+      const sections = links.map(function (link) {
+        return document.getElementById(link.hash.slice(1));
+      }).filter(Boolean);
+      if (!sections.length) return;
+      let current = sections[0];
+      sections.forEach(function (section) {
+        if (section.getBoundingClientRect().top <= readingLine) current = section;
+      });
+      if (window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) current = sections[sections.length - 1];
+      links.forEach(function (link) {
+        const active = link.hash === "#" + current.id;
+        link.classList.toggle("active", active);
+        if (active) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      });
+    });
   }
-  updateSectionNavigation();
-  startSlideshow();
-}
+  if (menus.length) {
+    window.addEventListener("scroll", function () {
+      if (!scrollPending) { scrollPending = true; requestAnimationFrame(updateSectionNavigation); }
+    }, { passive: true });
+    window.addEventListener("resize", updateSectionNavigation);
+    updateSectionNavigation();
+  }
 
-window.addEventListener("hashchange", openPage);
-window.addEventListener("scroll", updateSectionNavigation, { passive: true });
-window.addEventListener("resize", updateSectionNavigation);
-window.addEventListener("publicationsloaded", function() {
-  // Loading the selected papers changes section heights; restore a direct section link.
-  const section = Array.from(pageSections).find(function(section) {
-    return "#" + section.id === window.location.hash;
+  // Page identity matters when the installation uses plain WordPress permalinks.
+  function pageIdentity(url) {
+    return url.pathname.replace(/\/$/, "") + "?" + (url.searchParams.get("page_id") || url.searchParams.get("p") || "");
+  }
+  const currentUrl = new URL(window.location.href);
+  document.querySelectorAll(".main-nav a").forEach(function (link) {
+    const destination = new URL(link.href, currentUrl);
+    const active = destination.origin === currentUrl.origin && pageIdentity(destination) === pageIdentity(currentUrl);
+    link.classList.toggle("active", active);
+    if (active) link.setAttribute("aria-current", "page");
   });
-  if (section) section.scrollIntoView({ block: "start" });
-  updateSectionNavigation();
-});
-openPage();
+})();

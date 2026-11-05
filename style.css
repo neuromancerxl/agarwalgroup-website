@@ -1,3 +1,12 @@
+/*
+Theme Name: Agarwal Group
+Description: Editable research group website for the University of Pennsylvania.
+Version: 1.0.0
+Requires at least: 6.6
+Requires PHP: 7.4
+Text Domain: agarwal-group
+*/
+
 @font-face {
   font-family: "Instrument Serif";
   src: url("fonts/instrument-serif.ttf") format("truetype");
@@ -424,4 +433,78 @@ figcaption { margin-top: 9px; color: var(--muted); font-size: 12px; line-height:
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .home-text h1 span { transition: none; }
+}
+
+/* WordPress block wrappers retain the original layout classes. */
+.wp-site-blocks { padding: 0; }
+.wp-site-blocks > *, .wp-block-post-content > * { margin-block-start: 0; }
+.wp-block-group, .wp-block-post-content, .wp-block-agarwal-paper { min-width: 0; }
+.wp-block-group > .wp-block-group { margin-block-start: 0; }
+.header-brand .site-name { margin: 0; }
+.site-name a { color: white; text-decoration: none; }
+.site-affiliation { margin: 7px 0 0; color: #b7c1bb; font-size: 10px; line-height: 1.4; }
+.main-nav .wp-block-navigation__container { gap: 8px 24px; }
+.site-header .main-nav .wp-block-navigation-item__content { color: #d1d9d3; }
+.site-header .main-nav .wp-block-navigation-item__content.active,
+.site-header .main-nav .wp-block-navigation-item__content:hover { color: white; }
+.main-nav .home-link > a { font-weight: 600; }
+.main-nav .wp-block-navigation__responsive-container-open { color: white; }
+.main-nav .wp-block-navigation__responsive-container.is-menu-open { padding: 28px; background: var(--dark); color: white; }
+.main-nav .wp-block-navigation-item__label { white-space: nowrap; }
+.section-title p, .person-links p, .footer-inner p { margin: 0; }
+.research-nav p, .people-nav p { margin: 0; }
+.wp-block-agarwal-paper:not(:last-child) .paper-row { border-bottom: 0; }
+.paper-row h3 { font-family: "Manrope", Arial, sans-serif; }
+.paper-link > a { color: var(--accent); text-decoration: none; }
+.paper-link:hover > a { text-decoration: underline; }
+.research-figure > img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain; border: 1px solid var(--line); background: var(--research-image-background, white); }
+.wp-block-image.member-photo { width: 100%; margin: 0; }
+.wp-block-image.member-photo img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+.person .wp-block-image { margin: 0; }
+.person .wp-block-image > img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+.photo-placeholder p { margin: 0; }
+.alumni-table-wrap table { width: 100%; min-width: 480px; border-collapse: collapse; text-align: left; font-size: 14px; }
+.alumni-table-wrap td, .alumni-table-wrap th { padding: 16px 18px 16px 0; border: 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.alumni-table-wrap thead th { font-weight: 400; color: var(--muted); font-size: 12px; }
+.alumni-table-wrap tbody td { color: var(--muted); }
+.alumni-table-wrap tbody td:first-child { width: 28%; color: var(--ink); font-weight: 600; }
+.alumni-table-wrap th:nth-child(2) { width: 22%; }
+.footer-inner .wp-block-image { width: 185px; margin: 0; }
+.news-content { max-width: 780px; padding-top: 30px; }
+.news-content p { margin: 0 0 20px; }
+.home-news .wp-block-post-template > li, .news-list .wp-block-post-template > li { border-top: 1px solid var(--line); padding: 16px 0; margin: 0; }
+.home-news .wp-block-post-date, .news-list .wp-block-post-date { margin-bottom: 5px; font-size: 12px; color: var(--muted); text-transform: uppercase; }
+.home-news .wp-block-post-title { font-family: "Manrope", Arial, sans-serif; margin: 0; font-size: 15px; line-height: 1.65; font-weight: 600; }
+.news-list .wp-block-post-title { margin: 0; font-size: 18px; line-height: 1.5; }
+.news-list .wp-block-post-excerpt { margin-top: 7px; max-width: 720px; color: var(--muted); font-size: 14px; }
+.news-list .wp-block-post-excerpt p { margin: 0; }
+.news-list .wp-block-post-title a { margin: 0; font-size: inherit; }
+.agarwal-news-query > .wp-block-post-template { padding: 0; margin: 0; list-style: none; }
+.wp-block-query-pagination { margin-top: 24px; font-size: 14px; }
+.wp-block-query-pagination .page-numbers { padding: 5px 8px; }
+.publication-topics a, .publication-pagination a { display: inline-block; padding: 10px 0; border-bottom: 2px solid transparent; color: var(--muted); text-decoration: none; font-size: 13px; white-space: nowrap; }
+.publication-topics a.active, .publication-pagination a[aria-current="page"] { color: var(--accent); border-bottom-color: var(--accent); }
+.publication-pagination a { padding: 6px 9px; }
+.publication-submit { align-self: end; padding: 10px 14px; border: 1px solid var(--line); background: white; color: var(--accent); cursor: pointer; }
+.publication-tools { align-items: end; }
+
+/* Gallery captions stay below a contained figure, including when JavaScript is unavailable. */
+.wp-block-gallery.is-style-agarwal-slideshow { display: block; margin: 0; }
+.wp-block-gallery.is-style-agarwal-slideshow > figure.wp-block-image { display: block; width: 100% !important; flex: none; margin: 0; }
+.wp-block-gallery.is-style-agarwal-slideshow > figure.wp-block-image > img { width: 100%; height: auto; max-height: none; aspect-ratio: 4 / 3; object-fit: contain !important; background: var(--slide-background); border: 1px solid #ffffff2b; }
+.wp-block-gallery.is-style-agarwal-slideshow > figure.wp-block-image.quantum-slide > img { padding: 10px; }
+.wp-block-gallery.is-style-agarwal-slideshow > figure.wp-block-image > figcaption { position: static; width: auto; max-height: none; padding: 0; margin-top: 9px; background: transparent; background-image: none; color: #b9c5bc; overflow: visible; text-align: left; font-size: 12px; line-height: 1.55; }
+.wp-block-gallery.is-style-agarwal-slideshow figure.wp-block-image figcaption a { color: #eab9c0; }
+.wp-block-gallery.is-style-agarwal-slideshow figure.wp-block-image figcaption strong { color: white; }
+.wp-block-gallery.is-style-agarwal-slideshow > figure.wp-block-image[hidden] { display: none !important; }
+.admin-bar .research-nav, .admin-bar .people-nav { top: 60px; }
+.admin-bar .research-area, .admin-bar .people-section { scroll-margin-top: 60px; }
+:where(a, button, input, select):focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.home-top :where(a, button):focus-visible, .site-header :where(a, button):focus-visible { outline-color: var(--pink); }
+@media (max-width: 760px) {
+  .main-nav .wp-block-navigation__container { gap: 8px 17px; }
+  .main-nav { margin-top: 12px; }
+  .member-heading .wp-block-image { max-width: 112px; }
+  .publication-tools { flex-wrap: wrap; }
+  .admin-bar .research-area, .admin-bar .people-section { scroll-margin-top: 74px; }
 }

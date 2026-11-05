@@ -3,7 +3,6 @@
 
   const papersPerPage = 10;
   const groupAuthor = "Ritesh Agarwal";
-  const selectedLists = document.querySelectorAll("[data-paper-ids]");
   const publicationList = document.getElementById("publication-list");
   const topicFilters = document.querySelector(".publication-topics");
   const publicationTools = document.querySelector(".publication-tools");
@@ -13,9 +12,12 @@
   const pagination = document.getElementById("publication-pagination");
   const resultStatus = document.getElementById("publication-status");
 
+  if (!publicationList) return;
+
+  const configuration = window.agarwalPublications || {};
   let papers = [];
-  let selectedTopic = "all";
-  let currentPage = 1;
+  let selectedTopic = configuration.topic || "all";
+  let currentPage = configuration.page || 1;
 
   function abbreviateAuthor(name) {
     const parts = name.trim().split(/\s+/);
@@ -123,44 +125,6 @@
 
     row.append(year, details, journal);
     return row;
-  }
-
-  function createResearchPaper(paper) {
-    const link = createPaperLink(paper);
-    link.className = "paper-link";
-    link.dataset.paperId = paper.id;
-    const details = document.createElement("span");
-    details.textContent = paper.journal + " · " + paper.year;
-    if (paper.status === "preprint") details.textContent += " · Preprint";
-    link.append(details);
-    return link;
-  }
-
-  function createMessage(text) {
-    const message = document.createElement("p");
-    message.className = "publication-message";
-    message.textContent = text;
-    return message;
-  }
-
-  function renderSelectedLists() {
-    const papersById = new Map(papers.map(function(paper) {
-      return [paper.id, paper];
-    }));
-
-    selectedLists.forEach(function(list) {
-      const ids = list.dataset.paperIds.trim().split(/\s+/).filter(Boolean);
-      const compact = list.classList.contains("research-papers");
-      const entries = ids.map(function(id) {
-        const paper = papersById.get(id);
-        if (!paper) {
-          console.warn("Unknown selected publication ID:", id);
-          return createMessage("A selected paper is unavailable.");
-        }
-        return compact ? createResearchPaper(paper) : createPaperRow(paper);
-      });
-      list.replaceChildren(...entries);
-    });
   }
 
   function createTopicFilters(topics) {
@@ -281,6 +245,7 @@
     const start = (currentPage - 1) * papersPerPage;
     const visiblePapers = matches.slice(start, start + papersPerPage);
     publicationList.replaceChildren(...visiblePapers.map(createPaperRow));
+    updateAddress();
     emptyMessage.hidden = matches.length > 0;
     renderPagination(totalPages);
     resultStatus.textContent = matches.length
@@ -294,28 +259,40 @@
     renderPublications();
   }
 
+  function updateAddress() {
+    const address = new URL(window.location.href);
+    const values = { ag_search: paperSearch.value.trim(), ag_topic: selectedTopic, ag_year: yearFilter.value, ag_page: String(currentPage) };
+    Object.entries(values).forEach(function ([key, value]) {
+      if (!value || value === "all" || (key === "ag_page" && value === "1")) address.searchParams.delete(key);
+      else address.searchParams.set(key, value);
+    });
+    window.history.replaceState(null, "", address);
+  }
+
   async function loadPublications() {
+    publicationList.setAttribute("aria-busy", "true");
     try {
-      const response = await fetch("pubbase.json", { cache: "no-store" });
+      const response = await fetch(configuration.catalogUrl, { cache: "no-store" });
       if (!response.ok) throw new Error("Publication catalog request failed: " + response.status);
       const catalog = await response.json();
       validateCatalog(catalog);
       papers = catalog.papers.slice().sort(function(a, b) { return b.year - a.year; });
-      renderSelectedLists();
       createTopicFilters(catalog.topics);
       populateYears();
       paperSearch.addEventListener("input", resetPublicationPage);
       yearFilter.addEventListener("change", resetPublicationPage);
+      publicationTools.addEventListener("submit", function (event) {
+        event.preventDefault();
+        resetPublicationPage();
+      });
+      publicationTools.querySelector(".publication-submit").hidden = true;
       topicFilters.hidden = false;
       publicationTools.hidden = false;
       renderPublications();
       window.dispatchEvent(new Event("publicationsloaded"));
     } catch (error) {
       console.error("Could not load the publication catalog:", error);
-      const message = "Papers could not be loaded. Please try again.";
-      selectedLists.forEach(function(list) { list.replaceChildren(createMessage(message)); });
-      publicationList.replaceChildren(createMessage(message));
-      resultStatus.textContent = message;
+      // Keep the server-rendered list, links, and GET form as a working fallback.
     } finally {
       publicationList.setAttribute("aria-busy", "false");
     }

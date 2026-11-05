@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": true,
+    "layout": { "contentSize": "1160px", "wideSize": "1160px" },
+    "color": {
+      "defaultPalette": false,
+      "palette": [
+        { "slug": "white", "name": "White", "color": "#ffffff" },
+        { "slug": "ink", "name": "Ink", "color": "#17211e" },
+        { "slug": "muted", "name": "Muted", "color": "#5b6762" },
+        { "slug": "accent", "name": "Burgundy", "color": "#803d50" },
+        { "slug": "dark", "name": "Dark", "color": "#131716" },
+        { "slug": "pink", "name": "Pink", "color": "#e5b3ac" }
+      ]
+    },
+    "typography": {
+      "fluid": false,
+      "fontFamilies": [
+        {
+          "slug": "manrope", "name": "Manrope", "fontFamily": "\"Manrope\", Arial, sans-serif",
+          "fontFace": [
+            { "fontFamily": "Manrope", "fontStyle": "normal", "fontWeight": "400", "src": ["file:./fonts/manrope-regular.ttf"] },
+            { "fontFamily": "Manrope", "fontStyle": "normal", "fontWeight": "600", "src": ["file:./fonts/manrope-semibold.ttf"] }
+          ]
+        },
+        {
+          "slug": "instrument-serif", "name": "Instrument Serif", "fontFamily": "\"Instrument Serif\", Georgia, serif",
+          "fontFace": [
+            { "fontFamily": "Instrument Serif", "fontStyle": "normal", "fontWeight": "400", "src": ["file:./fonts/instrument-serif.ttf"] }
+          ]
+        }
+      ]
+    }
+  },
+  "styles": {
+    "color": { "background": "var:preset|color|white", "text": "var:preset|color|ink" },
+    "spacing": { "blockGap": "0" },
+    "typography": { "fontFamily": "var:preset|font-family|manrope", "fontSize": "15px", "lineHeight": "1.65" },
+    "elements": { "link": { "color": { "text": "var:preset|color|accent" } } }
+  },
+  "templateParts": [
+    { "name": "header", "title": "Header", "area": "header" },
+    { "name": "footer", "title": "Footer", "area": "footer" }
+  ]
+}

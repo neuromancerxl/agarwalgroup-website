@@ -1,0 +1,13 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "agarwal/publications",
+  "version": "1.0.0",
+  "title": "Publication catalog",
+  "category": "widgets",
+  "icon": "list-view",
+  "description": "All papers, with topic filters, search, and ten papers per page.",
+  "textdomain": "agarwal-group",
+  "supports": { "html": false, "multiple": false },
+  "editorScript": "agarwal-editor"
+}

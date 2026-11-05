@@ -1,0 +1,8 @@
+# Local WordPress installations, dependencies, and deployment archives are not theme source.
+node_modules/
+vendor/
+*.zip
+wp-config.php
+.env
+.env.*
+*.log

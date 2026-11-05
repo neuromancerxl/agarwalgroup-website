@@ -1,326 +1,65 @@
-# Agarwal Group demonstration website
+# Agarwal Group WordPress theme
 
-This folder contains a static demonstration of the proposed Agarwal Group website. It uses ordinary HTML, CSS, JavaScript, and a local JSON publication catalog. There is no framework, package manager, database server, PHP, or build step.
+A block theme preserving the group's approved website layout. The repository root is the installable theme. There is no build step and no external font service.
 
-The demonstration is intentionally provisional. The homepage has the approved visual direction, while unapproved research and profile descriptions use `Lorem ipsum` placeholder text. The site contains no author, creator, or designer attribution.
+Requires WordPress 6.6+ and PHP 7.4+. The first release works without Pods. Publication records still come from pubbase.json; moving records and shared image metadata into Pods is a later increment.
 
-## 1. Open and edit the website in VS Code
+## Install from GitHub
 
-### Recommended method: Live Server
+1. Push the theme commit on main to neuromancerxl/agarwalgroup-website.
+2. In Deployer for Git, install it as a **Theme**, selecting this repository and branch main.
+3. Open Appearance → Themes and activate **Agarwal Group**. Activation does not import content or change Reading settings.
+4. Open Appearance → Agarwal setup. The table identifies existing pages, which setup preserves.
+5. Choose whether to publish new starter content or create drafts. Optionally select the published Home page as the front page. Click **Create missing starter content**.
+6. Review the six pages, the news Posts, navigation, and media. If you created drafts, publish reviewed items in Pages/Posts, then choose Home under Settings → Reading.
 
-1. Unzip the project folder if it arrived as a ZIP file.
-2. Open Visual Studio Code.
-3. Choose **File → Open Folder**.
-4. Select the `agarwal-demo` folder, not only `index.html`.
-5. In the left sidebar, open **Extensions** or press `Ctrl+Shift+X`.
-6. Search for **Live Server** by Ritwick Dey and install it.
-7. Open `index.html` in VS Code.
-8. Right-click anywhere inside the file and choose **Open with Live Server**. You can also click **Go Live** in the lower-right corner.
-9. The browser should open an address similar to `http://127.0.0.1:5500/index.html`.
+Setup can be repeated: it reuses existing page/post slugs and imported media. It never updates an existing page's content or republishes a draft on a later run. If you already have a page named Home, Research, Publications, People, News, or Contact, edit it and insert the corresponding Agarwal starting layout from Patterns if wanted.
 
-Keep VS Code and the browser open together. Save a change with `Ctrl+S`; Live Server should refresh the page automatically.
+The Research and PI descriptions, six PhD biographies/portraits, and alumni rows still contain the existing placeholders. Sai's biography and photograph are preserved. Review placeholder content before publishing.
 
-Do not use the **Run Code** button for this project. HTML is displayed by a browser, and Live Server provides the small local web server that the browser expects.
+Keep the installed theme folder name unchanged for later deployments. A theme update changes code, not existing page content or uploaded images. Changes made to starter patterns apply when a pattern is inserted, not to previously created pages. Template changes saved in Appearance → Editor override matching template files until that customization is cleared or reconciled.
 
-### Why an HTTP preview is required
+## Edit the website
 
-Use Live Server or another local HTTP server. The publication code fetches `pubbase.json` from the same server as the page. Opening `index.html` directly as a `file://` URL can prevent that fetch from working. No external publication service is contacted.
+- **Text and profiles:** Pages → choose the page → edit its blocks → Save. These are ordinary headings, paragraphs, images, groups, and tables.
+- **Homepage slides:** Select the Gallery inside the slideshow. Use WordPress's Add/Replace and Gallery ordering controls. The Research slideshow style keeps a 4:3 frame and full-image containment. The editor shows the images together for editing; the website plays them sequentially.
+- **Figure captions and portraits:** Select the Image block. Captions are editable below the image. Scientific figures use containment; portraits use a square crop. This release uses per-placement captions, not synchronized Media Library metadata.
+- **Backgrounds:** The theme defaults scientific frames to white. The existing phase classes retain their dark backgrounds. A shared image color-picker form is deferred to the Pods increment.
+- **Selected papers:** Each citation is a Publication reference block. Choose a paper in its block settings. Use WordPress's normal move/duplicate/remove controls to arrange references. Compact research links are an option in the same sidebar.
+- **Publication catalog:** The Publication catalog block includes all records, with topic/search/year filtering and ten per page. The initial output, filtering form, and page links also work without JavaScript. Live search is progressively added in the browser.
+- **News:** Use normal Posts in the News category. Set the title, date, and a manual Excerpt. The optional News source link field makes linked headlines open an external article; leave it empty for an on-site post. The full post body can contain the source link and longer text. Home shows two entries; the News page shows summaries and pagination. Uncategorized posts do not enter those feeds.
+- **Header/footer/menu:** Appearance → Editor. The site title comes from WordPress's site settings. The affiliation line and contact links are editable blocks.
 
-### If images or fonts disappear
+The native mobile navigation opens with WordPress's menu button. Research and People retain their section navigation. The slideshow pauses on hover, keyboard focus, and inactive tabs; a Pause/Play button and reduced-motion support are included.
 
-Open the whole folder and keep the directory structure intact:
+## Publication records
 
-```text
-agarwal-demo/
-├── index.html
-├── style.css
-├── script.js
-├── publications.js
-├── pubbase.json
-├── fonts/
-└── images/
-```
+pubbase.json is the sole citation source for this release. Keep permanent IDs, full author names, and the shared topic IDs. Use a DOI identifier or full URL; URL takes precedence. The existing incomplete-author flags and collective attribution remain intact.
 
-For example, `src="images/phase.webp"` means the browser expects an `images` folder beside `index.html`. Moving `index.html` by itself breaks that path.
+Up to three non-Ritesh authors are shown using initials; longer or incomplete lists add et al. If present in the record, R. Agarwal follows a middle dot. Changes to a record update every reference without editing each page.
 
-## 2. What each file does
+The catalog currently contains 13 records. Nine author lists are incomplete and five records have no topic assignment. No external metadata lookup or automatic JSON/dashboard synchronization runs.
 
-| File or folder | Purpose |
+## Source layout
+
+| Path | Purpose |
 | --- | --- |
-| `index.html` | Page structure, publication ID selections, headings, captions, and contact information |
-| `style.css` | Colors, fonts, spacing, desktop layout, mobile layout, and visual states |
-| `script.js` | Slideshow, active research-topic highlight, and navigation between pages and sections |
-| `publications.js` | Catalog loading, author formatting, paper rendering, publication filters, and pagination |
-| `pubbase.json` | Shared topic definitions and the publication records used throughout the site |
-| `images/` | Research figures, Ritesh Agarwal photograph, and Penn Engineering logo |
-| `fonts/` | Local font files, so the design does not depend on Google Fonts loading |
-
-The project is organized this way because it is easier to learn and edit than a single file containing 1.7 MB of embedded image and font data.
-
-## 3. How the apparent pages work
-
-This is one HTML document with six large containers:
-
-```html
-<div class="page" data-page="home">...</div>
-<div class="page" data-page="research" hidden>...</div>
-<div class="page" data-page="publications" hidden>...</div>
-```
-
-The navigation uses hash links such as `#research` and `#people`. The `openPage()` function in `script.js` reads the text after `#`, reveals the matching container, and hides the others.
-
-Therefore:
-
-- `index.html#home` shows the homepage.
-- `index.html#research` shows Research.
-- `index.html#publications` shows Publications.
-- Refreshing a section keeps that section open because the hash remains in the URL.
-
-For the eventual WordPress website, these sections will become separate WordPress pages or templates. The hash navigation exists only to make one portable demonstration file behave like a small site.
-
-## 4. Page organization
-
-### Header
-
-The header contains the group name, Penn affiliation, and six navigation links. It uses the same dark background as the homepage opening so the two areas appear continuous.
-
-### Homepage
-
-The homepage has two parts:
-
-1. A dark opening with the research heading and image slideshow.
-2. A white lower area with recent papers and news.
-
-The opening is a two-column CSS Grid. The text takes `0.85fr` and the slideshow takes `1.15fr`, with a `62px` gap. Below `760px`, the grid changes to one column.
-
-The slideshow contains three ordinary `<figure>` elements. JavaScript changes their `hidden` property. Every slide has a `data-topic` value, and each phrase in the heading has a corresponding `data-hero-topic` value. When a slide appears, JavaScript adds the `active-topic` class to the matching phrase.
-
-The slideshow advances every 6.5 seconds. It pauses while the pointer is over it and does not auto-advance when the visitor has enabled reduced motion in their operating system. Prev and Next buttons change the same `currentSlide` number manually.
-
-### Research
-
-The introductory sentence describes the group’s broad experimental approach. A topic menu provides direct links to the three research sections.
-
-Each research area currently contains:
-
-- a title;
-- placeholder `Lorem ipsum` copy;
-- selected paper links;
-- one credited research image.
-
-The placeholder copy prevents the demonstration from presenting an unreviewed interpretation of the group’s research as approved language.
-
-Each topic now has exactly 150 words of placeholder description in two paragraphs. On wide screens, a sticky menu on the left links to the three topics and marks the topic being read. Below 960 pixels, the menu moves above the content. Its links use ordinary section IDs, such as `#nanophotonics`; `openPage()` recognizes these IDs and keeps Research open on clicks, refreshes, and browser history navigation.
-
-Research figures use a consistent 4:3 frame with `object-fit: contain`, so diagrams and labels remain visible. Descriptions wrap around the figures on wide screens, while selected papers stay below both text and figure. Below 760 pixels, the figures and text stack. To change a figure’s background, set `--research-image-background` on its figure class; `.phase-research-image` shows an example. Research figures remain static.
-
-### Publications
-
-`pubbase.json` holds the publication catalog. `schemaVersion` identifies its format, `topics` defines the shared topic IDs and labels, and `papers` contains the records. Each paper has a permanent `id`; full names and titles stay in the catalog, and the display is generated from them.
-
-Home and Research keep their curated selections in `data-paper-ids` attributes. IDs are separated by whitespace and displayed in the listed order. Home uses paper rows; Research uses compact title, journal, year, and optional Preprint links. Publications automatically includes every paper in the catalog. Repeated citation metadata has been removed from these HTML lists.
-
-A horizontal row above the Publications search controls filters the list by research topic:
-
-- All;
-- Quantum materials;
-- Nanophotonics;
-- Phase-change materials.
-
-Topic buttons and year options are generated from the catalog. The active topic has a burgundy underline. On narrow screens, the topic row scrolls horizontally. Topic selection, text search, and year work together across the entire catalog. Search includes full author names and their displayed initials. Results are ordered newest year first, retaining JSON order within each year. An empty result shows “No papers match these filters.”
-
-Each record’s `topics` array contains topic IDs, for example `["quantum-materials", "nanophotonics"]`. One paper can belong to multiple topics without duplicating its record. Initial assignments follow the Research selections; five papers still need topic review and remain visible under All. Nine records have incomplete author lists, marked with `authorsIncomplete: true`. The 2011 entry retains its existing collective attribution in `authorNote` until its authors are supplied.
-
-Author lines use initials while preserving hyphenated given names and common surname particles. Ritesh Agarwal is displayed separately at the end as `R. Agarwal`, following a middle dot. Up to three other names are shown; longer or incomplete lists append `et al.`. Collaboration-specific positioning is deferred, and the stored author order remains unchanged.
-
-Publications shows ten matching papers per page. Page numbers use the same underline treatment as topic filters. Previous appears only after the first page, and Next only before the last. Large catalogs use an abbreviated number range. Pagination disappears when results fit on one page. Changing any filter resets to page one; clicking a page moves focus and scroll position to the result list. Home and Research are not paginated.
-
-`publications.js` fetches the catalog once per page load and uses ordinary DOM elements and text content to render it. A failed load shows a short availability message; technical details go to the browser console. No external metadata lookup, parser library, or build step is involved.
-
-### People
-
-People has three sections: Principal investigator, PhD students, and Alumni. Its sticky PI / PhDs / Alumni menu uses the same styles and navigation behavior as Research, including direct section links such as `#phd-students` and an active marker while scrolling. On narrower screens, the menu moves above the content.
-
-Ritesh Agarwal’s profile keeps his title, photograph, source credit, email, Penn profile, and publications link. His biography contains exactly 200 words of Lorem ipsum in two paragraphs.
-
-There are seven PhD profile placeholders, arranged two per row above 760 pixels and one per row below. Each has a square photo placeholder, a name, a `YYYY–present` joining-year field, and exactly 100 words of Lorem ipsum. Replace the placeholder photo `<div>` with an `<img class="member-photo" src="images/your-photo.webp" alt="Name">` when a portrait is available. Student names, dates, and photographs are deliberately unspecified until the roster is supplied.
-
-Alumni uses a three-column table: name, graduation year, and present position (role and institution). Three clearly marked example rows demonstrate the layout without claiming an actual alumni count. Replace those rows with approved information; remove or add rows as needed. On small screens, the table can scroll horizontally.
-
-### News
-
-The three demonstration entries are hardcoded in the HTML and link to Penn sources. In WordPress these should become ordinary Posts in a News category.
-
-### Contact
-
-The page introduction is exactly 20 words:
-
-> Interested in joining the group, collaborating, or learning more about our work? Please contact us using the information listed below.
-
-The two columns contain the PI contact and LRSM laboratory address.
-
-### Footer
-
-The footer contains a locally stored Penn Engineering logo and group email. The local image means the logo remains visible when the demonstration computer is offline.
-
-## 5. Typography
-
-The site uses two typefaces:
-
-| Typeface | Weight | Use |
-| --- | --- | --- |
-| Instrument Serif | 400 | Large page titles, homepage research statement, and section headings |
-| Manrope | 400 | Body text, navigation, captions, metadata, and controls |
-| Manrope | 600 | Group name, paper titles, labels, and small emphasis |
-
-The fonts are declared at the top of `style.css` with `@font-face` and loaded from the `fonts` folder. Fallbacks are included:
-
-```css
-font-family: "Instrument Serif", Georgia, serif;
-font-family: "Manrope", Arial, sans-serif;
-```
-
-If a font file fails, the browser uses Georgia for headings and Arial for ordinary text. Instrument Serif gives the large headings an editorial scientific-publication quality; Manrope keeps the small information dense but readable.
-
-## 6. Color system
-
-The principal colors are declared once in `:root` near the top of `style.css`:
-
-| CSS name | Hex | Use |
-| --- | --- | --- |
-| `--white` | `#ffffff` | Main page background and figure backgrounds |
-| `--ink` | `#17211e` | Main dark green-black text |
-| `--muted` | `#5b6762` | Secondary text, dates, captions, and metadata |
-| `--line` | `#d4dcd5` | Dividers and light borders |
-| `--accent` | `#803d50` | Links, years, roles, and restrained burgundy emphasis |
-| `--dark` | `#131716` | Header and homepage opening |
-| `--pink` | `#e5b3ac` | Active research phrase and slideshow hover details |
-
-The site is white below the homepage opening because the earlier off-white background felt wrong. The dark opening gives the research imagery more contrast. Burgundy relates loosely to Penn’s red without turning the entire site red and blue. The pale pink is used only inside the dark opening.
-
-To change a sitewide color, change the hex value in `:root`; every selector using that variable updates.
-
-## 7. Layout and spacing
-
-The main content width is controlled by:
-
-```css
---page-width: 1160px;
-```
-
-The `.wrap` class centers content, limits it to 1160 pixels, and adds `28px` side padding. On screens narrower than `760px`, the side padding becomes `20px` and multi-column layouts stack vertically.
-
-The site primarily uses CSS Grid for large page layouts:
-
-- homepage opening: text plus slideshow;
-- homepage lower area: papers plus news;
-- research areas: copy plus image;
-- People: portrait plus profile;
-- Contact: two information columns.
-
-Flexbox is used for smaller one-dimensional arrangements such as the header, navigation, section-title rows, and footer.
-
-Horizontal rules are usually `1px` solid `--line`. There are few boxes or rounded cards. This keeps the page closer to a research group site than a product landing page.
-
-## 8. Common edits
-
-### Change ordinary text
-
-Open `index.html`, use `Ctrl+F` to find the visible sentence, edit it, and save.
-
-### Replace placeholder research copy
-
-Find the three `research-description` blocks in `index.html`. Each contains two placeholder paragraphs totaling 150 words. Replace both paragraphs with approved copy. The PI description also remains placeholder text; the Publications introduction has been removed.
-
-### Change a homepage slide
-
-Find the relevant `<figure class="slide">` in `index.html`. Replace the file in its `<img src>` or add an image to `images/` and change the filename. Keep the `data-topic` value as `quantum`, `photonics`, or `phase` so the correct heading phrase is highlighted.
-
-### Add a publication
-
-Add a record to the `papers` array in `pubbase.json`, with a new permanent ID. Supply its full title, authors in publication order, numeric year, journal, status, and topic IDs. Use either a DOI identifier in `doi` or a complete primary link in `url`; an explicit URL takes precedence. The current record type is `article`, and status is `published` or `preprint`.
-
-Keep full names in `authors`; the display code supplies initials. Set `authorsIncomplete` to `true` while names are missing, then remove that flag when the full list is entered. Use an empty `topics` array until classification is reviewed. Do not change an existing ID without updating its selections.
-
-The paper appears automatically in Publications after refresh, including the relevant year option and pagination. To feature it on Home or Research, add its ID to that section’s `data-paper-ids` list. The order of IDs controls the order of those selected lists. Editing a record updates every location that references it.
-
-For example, a compact Research list can select two papers without copying their metadata:
-
-```html
-<div
-  class="research-papers"
-  data-paper-ids="wang2026flatbands zhang2022microlaser"
-></div>
-```
-
-### Add a news item
-
-Copy one `<article>` inside `.news-list` and edit its date, title, description, link, and source. If it should also appear on the homepage, copy a shorter version into `.home-news`.
-
-### Change the slideshow speed
-
-In `script.js`, find:
-
-```js
-}, 6500);
-```
-
-`6500` means 6,500 milliseconds, or 6.5 seconds.
-
-### Change the mobile breakpoint
-
-In `style.css`, find:
-
-```css
-@media (max-width: 760px)
-```
-
-The mobile rules apply at 760 pixels and below.
-
-## 9. What is real and what is provisional
-
-Real demonstration content:
-
-- group and university names;
-- Ritesh Agarwal’s listed position and contact links;
-- selected paper titles, author lines, years, venues, and links;
-- news entries linked to Penn sources;
-- laboratory address;
-- credited research figures.
-
-Provisional content:
-
-- research-area descriptions;
-- PI biographical paragraph;
-- complete current group roster;
-- the selection and ordering of papers and news;
-- final image permissions and approved Penn branding asset.
-
-The research figures retain source credits. Image reuse should be confirmed before public launch. The logo file in this demonstration is the same publicly available Penn Engineering mark used in the earlier prototype; the production WordPress site should use the asset supplied or approved by Penn Engineering.
-
-## 10. How this maps to WordPress later
-
-The demonstration shows appearance and behavior. In WordPress, content that future group members change should be stored as editable records:
-
-| Demonstration item | WordPress destination |
-| --- | --- |
-| Header, footer, fonts, colors, layout | Block theme and Site Editor |
-| Homepage introduction | Editable page/block fields |
-| Research slides | Research Slide entries with image, caption, credit, order, and topic |
-| Publications | Publication entries with title, authors, year, venue, link, and status |
-| Research text | Normal page blocks or structured research-area entries |
-| People | Person entries with name, role, photo, bio, and links |
-| News | Regular WordPress Posts |
-| Contact information | Editable page blocks or site settings |
-
-The custom code should handle presentation and slideshow mechanics. A future administrator should change a slide, paper, person, or news item in the WordPress dashboard rather than editing this HTML.
-
-## 11. Demonstration limitations
-
-- It is one static HTML document pretending to contain multiple pages.
-- Publication search only searches the visible text already loaded in the page.
-- There is no WordPress admin, database, analytics, contact form, authentication, or content workflow.
-- External publication and Penn links need internet access.
-- Content changes are made in code until the WordPress conversion.
-
-Those limits are appropriate for a design demonstration. The file shows the proposed structure and interaction without claiming that the backend has already been built.
+| style.css | Theme header, original design, native-block layout adjustments |
+| theme.json | Editor/global colors, local fonts, content widths |
+| functions.php | Theme hooks, asset loading, block registration, news source link |
+| inc/setup.php | Explicit starter-content and Media Library import |
+| inc/publications.php | JSON loading, shared citation formatting, server filtering/pagination |
+| templates/ | Front page, regular page, post, fallback, and 404 templates |
+| parts/ | Shared header/footer entry points |
+| patterns/ | Native-block starting layouts and shared site parts |
+| blocks/ | Publication reference/catalog metadata and editor controls |
+| editor.css | Editor-specific adjustments |
+| script.js | Gallery slideshow and section/navigation enhancement |
+| publications.js | Live catalog filtering/pagination enhancement |
+| images/, fonts/ | Local assets and font license files |
+
+The demo and layout Git branches preserve the static versions. main contains the WordPress theme. Open the theme in a WordPress installation to preview it; VS Code Live Server cannot execute PHP or the block templates.
+
+## Verification
+
+Verified in a disposable WordPress 7.1.4 installation with PHP 8.3.36: theme activation; PHP/JavaScript syntax; all 247 page/template blocks accepted by the editor; repeatable setup and preservation of existing content; server-side search/topic filtering and pagination; citation and catalog previews in the actual editor; and Home, Research, People, and Publications at a 390 px mobile viewport without page-wide overflow. Test installations and archives stay outside this repository. Review the installed theme on the Penn host after deployment as well.

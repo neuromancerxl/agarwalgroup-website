@@ -1,0 +1,13 @@
+/* Keep the page canvas close to the website while leaving editing controls usable. */
+body { font-family: "Manrope", Arial, sans-serif; }
+.wp-block { max-width: none; }
+.research-nav, .people-nav { position: static; }
+.home-intro { align-items: start; }
+.wp-block-gallery.has-nested-images.is-style-agarwal-slideshow { display: flex !important; flex-wrap: wrap; gap: 16px; }
+.wp-block-gallery.has-nested-images.is-style-agarwal-slideshow > figure.wp-block-image { width: calc(50% - 8px) !important; }
+.home-text h1 span { color: #f3f4f0; }
+.wp-block-agarwal-paper { margin: 0; }
+.agarwal-editor-note { padding: 12px; margin: 14px 0; border: 1px solid #d4dcd5; color: #5b6762; font-size: 13px; }
+.wp-block-agarwal-paper .components-placeholder { min-width: 0; }
+.wp-block-agarwal-paper .components-placeholder__fieldset { display: block; width: 100%; }
+.wp-block-agarwal-paper .components-combobox-control { width: 100%; }
